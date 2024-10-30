@@ -1,3 +1,4 @@
-Hola pepe
-que tal
-estas
+primera linea
+2a linea
+fin del archivo
+de texto
