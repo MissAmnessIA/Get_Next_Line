@@ -5,96 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmesa-ke <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 17:38:08 by vmesa-ke          #+#    #+#             */
-/*   Updated: 2024/10/30 18:53:28 by vmesa-ke         ###   ########.fr       */
+/*   Created: 2024/11/05 14:09:03 by vmesa-ke          #+#    #+#             */
+/*   Updated: 2024/11/05 17:27:08 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "get_next_line.h"
 #include <stdio.h>
-#include <stddef.h>
-#include <unistd.h>
-#include <fcntl.h>
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 20
-#endif
-
-char	*ft_strjoin(char *new_save, char *save)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = (char *)malloc (ft_strlen(new_save) + ft_strlen(save) + 1);
-	if (str == NULL)
-		return (NULL);
-	while (*save)
-	{
-		save[i] = *s1;
-		i++;
-		s1++;
-	}
-	while (*s2)
-	{
-		save[i] = *new_
-	}
-}
-
-char	*ft_strchr(char *save, int chr)
-{
-	while (*s != '\0')
-	{
-		if ((unsigned char)*save == (unsigned char)chr)
-			return ((char *)save);
-		save++;
-	}
-	return (NULL);
-}
-
-char	*read_buffer(int fd, char *read)
-{
-	int		b_read;
-	char	*new_save;
-	
-	b_read = 1;
-	if (save == NULL)
-	{
-		read = malloc(1);
-		if (!read)
-			return (NULL);
-	}
-	while (!ft_strchr(read, '\n'))
-	{
-		b_read = read(fd, read, BUFFER_SIZE);
-		if (b_read <= 0)
-			return (NULL);
-		new_save = ft_strjoin(new_save, save);
-	}
-	return(save);
-	
-}
-
 char	*get_next_line(int fd)
 {
-	//char	*line;
-	char	*save;
-	char	*read;
-
-	if (!fd)
-		return (NULL);
-	save = read_buffer(fd, read);
-	return (save);
+	int b_read = 0;
+	char	*readed; 
+	char	*line;
+	static char	*saved;
+	readed = (char *)malloc(BUFFER_SIZE + 1);
+	if (!readed)
+		return(NULL);
+	if (saved == NULL)
+	{
+		saved = (char *)malloc(1);
+		if (!saved)
+			return (NULL);
+	}
+	while (ft_strchr(saved, '\n') == NULL)
+	{
+		b_read = read(fd, readed, BUFFER_SIZE);
+		if (b_read <= 0)
+			return(NULL);
+		saved = ft_strjoin(saved, readed);
+	}
+	free (readed);
+	line = cut_line(saved);
+	saved = lost_chars(saved);
+	return(line);
 }
 
-int main(void)
+int	main(void)
 {
-	char *prueba;
-	int	fd;
-
-	fd = open("Hola.txt", O_RDONLY);
-	if (fd < 0)
-		return (1);
-	prueba = get_next_line(fd);
-	printf("1a linea encontrada: %s \n", prueba);
-	close(fd);
+	int	fd1 = open("Hola.txt", O_RDONLY);
+	int	fd2 = open("Pepe.txt", O_RDONLY);
+	int fd3 = open("Lenteja.txt", O_RDONLY);
+	char *next_line;
+	
+	next_line = get_next_line(fd1);
+	printf("%s", next_line);
+	next_line = get_next_line(fd3);
+	printf("%s", next_line);
+	next_line = get_next_line(fd1);
+	printf("%s", next_line);
+	next_line = get_next_line(fd2);
+	printf("%s", next_line);
+	close(fd1);
+	close(fd2);
+	close(fd3);
 	return (0);
 }
