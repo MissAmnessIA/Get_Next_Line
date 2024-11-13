@@ -6,7 +6,7 @@
 /*   By: vmesa-ke <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:33:05 by vmesa-ke          #+#    #+#             */
-/*   Updated: 2024/11/05 17:14:39 by vmesa-ke         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:21:59 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strchr(const char *s, int c)
 	while (*s != '\0')
 	{
 		if ((unsigned char)*s == (unsigned char)c)
-			return((char *)s);
+			return ((char *)s);
 		s++;
 	}
 	return (NULL);
@@ -34,29 +34,25 @@ char	*lost_chars(char	*saved)
 	while (*saved != '\n')
 		saved++;
 	saved++;
-	while (*saved)
-	{
-		saved++;
+	while (saved[count])
 		count++;
-	}
-	saved -= count;
-	new_save = (char *)malloc(i + 1);
+	new_save = (char *)malloc(count + 1);
 	if (!new_save)
-		return(NULL);
-	while(*saved)
+		return (NULL);
+	while (*saved)
 	{
 		new_save[i] = *saved;
 		i++;
 		saved++;
 	}
 	new_save[i] = '\0';
-	return(new_save);
+	return (new_save);
 }
 
 char	*ft_strjoin(char *saved, char *readed)
 {
 	char	*joined;
-	int	i;
+	int		i;
 
 	i = 0;
 	joined = (char *)malloc(ft_strlen(saved) + ft_strlen(readed) + 1);
@@ -79,19 +75,25 @@ char	*ft_strjoin(char *saved, char *readed)
 char	*cut_line(char	*saved)
 {
 	char	*line;
-	int		count;
 	int		i;
 
 	i = 0;
-	count = 0;
-	while (saved[count] != '\n')
-		count++;
-	line = (char *)malloc(count + 2);
+	if (saved[i] == '\0')
+		return (NULL);
+	while (saved[i] != '\n' && saved[i])
+		i++;
+	line = (char *)malloc(i + 2);
 	if (!line)
 		return (NULL);
-	while (i <= count)
+	i = 0;
+	while (saved[i] && saved[i] != '\n')
 	{
 		line[i] = saved[i];
+		i++;
+	}
+	if (saved[i] == '\n')
+	{
+		line[i] = '\n';
 		i++;
 	}
 	line[i] = '\0';
@@ -101,9 +103,9 @@ char	*cut_line(char	*saved)
 int	ft_strlen(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }

@@ -6,56 +6,66 @@
 /*   By: vmesa-ke <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:09:03 by vmesa-ke          #+#    #+#             */
-/*   Updated: 2024/11/05 17:27:08 by vmesa-ke         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:31:44 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 #include <stdio.h>
-char	*get_next_line(int fd)
+
+char	*read_fd(int fd, char *saved)
 {
-	int b_read = 0;
-	char	*readed; 
-	char	*line;
-	static char	*saved;
+	int		b_read;
+	char	*readed;
+
 	readed = (char *)malloc(BUFFER_SIZE + 1);
 	if (!readed)
-		return(NULL);
-	if (saved == NULL)
-	{
+		return (NULL);
+	if (!saved)
 		saved = (char *)malloc(1);
-		if (!saved)
-			return (NULL);
-	}
-	while (ft_strchr(saved, '\n') == NULL)
+	b_read = 1;
+	while (!ft_strchr(readed, '\n') && b_read != 0)
 	{
 		b_read = read(fd, readed, BUFFER_SIZE);
 		if (b_read <= 0)
-			return(NULL);
+		{
+			free (readed);
+			return (NULL);
+		}
+		readed[b_read] = '\0';
 		saved = ft_strjoin(saved, readed);
 	}
-	free (readed);
+	free(readed);
+	return (saved);
+}
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*saved;
+	
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (!saved || !ft_strchr(saved, '\n'))
+		saved = read_fd(fd, saved);
+	if (saved == NULL)
+		return (NULL);
 	line = cut_line(saved);
 	saved = lost_chars(saved);
-	return(line);
+	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
-	int	fd1 = open("Hola.txt", O_RDONLY);
-	int	fd2 = open("Pepe.txt", O_RDONLY);
-	int fd3 = open("Lenteja.txt", O_RDONLY);
-	char *next_line;
-	
-	next_line = get_next_line(fd1);
-	printf("%s", next_line);
-	next_line = get_next_line(fd3);
-	printf("%s", next_line);
-	next_line = get_next_line(fd1);
-	printf("%s", next_line);
-	next_line = get_next_line(fd2);
-	printf("%s", next_line);
+	int		fd1;
+	char	*next_line;
+
+	fd1 = open("Hola.txt", O_RDONLY);
+	while (1)
+	{
+		next_line = get_next_line(fd1);
+		printf("%s \n", next_line);
+		if (next_line == NULL)
+			break ;
+	}
 	close(fd1);
-	close(fd2);
-	close(fd3);
 	return (0);
-}
+}*/
