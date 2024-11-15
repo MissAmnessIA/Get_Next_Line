@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmesa-ke <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 14:09:03 by vmesa-ke          #+#    #+#             */
-/*   Updated: 2024/11/13 17:31:44 by vmesa-ke         ###   ########.fr       */
+/*   Created: 2024/11/15 16:05:29 by vmesa-ke          #+#    #+#             */
+/*   Updated: 2024/11/15 16:05:34 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 char	*read_fd(int fd, char *saved)
 {
@@ -40,30 +39,15 @@ char	*read_fd(int fd, char *saved)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*saved;
+	static char	*saved[30798];
 	
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!saved || !ft_strchr(saved, '\n'))
-		saved = read_fd(fd, saved);
-	if (saved == NULL)
+	if (!saved[fd] || !ft_strchr(saved[fd], '\n'))
+		saved[fd] = read_fd(fd, saved[fd]);
+	if (saved[fd] == NULL)
 		return (NULL);
-	line = cut_line(saved);
-	saved = lost_chars(saved);
+	line = cut_line(saved[fd]);
+	saved[fd] = lost_chars(saved[fd]);
 	return (line);
-}
-
-int	main(void)
-{
-	int		fd1;
-	char	*next_line;
-
-	fd1 = open("Hola.txt", O_RDONLY);
-
-	next_line = get_next_line(fd1);
-	printf("%s \n", next_line);
-	next_line = get_next_line(fd1);
-	printf("%s \n", next_line);
-	close(fd1);
-	return (0);
 }
