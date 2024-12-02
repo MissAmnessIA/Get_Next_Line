@@ -26,24 +26,25 @@ char	*lost_chars(char	*saved)
 {
 	char	*new_save;
 	int		i;
-	int		count;
 
 	i = 0;
-	count = 0;
-	while (*saved != '\n')
-		saved++;
-	saved++;
-	while (saved[count])
-		count++;
-	new_save = (char *)malloc(count + 1);
+	char *ptr = saved;
+	while (*ptr != '\n')
+		ptr++;
+	ptr++;
+	while (ptr[i])
+		i++;
+	new_save = (char *)malloc(i + 1);
 	if (!new_save)
 		return (NULL);
-	while (*saved)
+	i = 0;
+	while (*ptr)
 	{
-		new_save[i] = *saved;
+		new_save[i] = *ptr;
 		i++;
-		saved++;
+		ptr++;
 	}
+	free(saved);
 	new_save[i] = '\0';
 	return (new_save);
 }
@@ -67,6 +68,7 @@ char	*ft_strjoin(char *saved, char *readed)
 		i++;
 		readed++;
 	}
+	free (saved);
 	joined[i] = '\0';
 	return (joined);
 }
@@ -104,7 +106,7 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }
