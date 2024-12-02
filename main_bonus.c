@@ -9,14 +9,18 @@ int main(void)
 	int fd1 = open("test1", O_RDONLY);
 	int fd2 = open("test2", O_RDONLY);
 
-	s = get_next_line(fd);
-	printf("%s \n", s);
 	s = get_next_line(fd1);
 	printf("%s \n", s);
-	s = get_next_line(fd);
-	printf("%s \n", s);
+	free(s);
 	s = get_next_line(fd2);
 	printf("%s \n", s);
+	free(s);
+	s = get_next_line(fd);
+	printf("%s \n", s);
+	free(s);
+	s = get_next_line(fd2);
+	printf("%s \n", s);
+	free(s);
 	s = get_next_line(fd1);
 	printf("%s \n", s);
 	free(s);
