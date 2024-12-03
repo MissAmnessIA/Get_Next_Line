@@ -26,7 +26,7 @@ char	*lost_chars(char	*saved)
 {
 	char	*new_save;
 	int		i;
-	char *ptr;
+	char	*ptr;
 
 	i = 0;
 	ptr = saved;
@@ -50,13 +50,13 @@ char	*lost_chars(char	*saved)
 	return (new_save);
 }
 
-char	*ft_strjoin(char *saved, char *readed)
+char	*ft_strjoin(char *save, char *readed)
 {
 	char	*joined;
 	int		i;
-	char *cpysaved;
+	char	*cpysaved;
 
-	cpysaved = saved;
+	cpysaved = save;
 	i = 0;
 	joined = (char *)malloc(ft_strlen(cpysaved) + ft_strlen(readed) + 1);
 	while (*cpysaved)
@@ -71,8 +71,8 @@ char	*ft_strjoin(char *saved, char *readed)
 		i++;
 		readed++;
 	}
-	free(saved);
 	joined[i] = '\0';
+	free(save);
 	return (joined);
 }
 
