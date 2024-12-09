@@ -36,7 +36,7 @@ char	*lost_chars(char	*saved)
 		i++;
 	new_save = (char *)malloc(i + 1);
 	if (!new_save)
-		return (NULL);
+		return (free(saved), NULL);
 	i = 0;
 	while (*ptr)
 	{

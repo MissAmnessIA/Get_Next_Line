@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmesa-ke <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 16:05:29 by vmesa-ke          #+#    #+#             */
-/*   Updated: 2024/11/15 16:05:34 by vmesa-ke         ###   ########.fr       */
+/*   Created: 2024/11/05 14:09:03 by vmesa-ke          #+#    #+#             */
+/*   Updated: 2024/11/13 17:31:44 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 char	*read_fd(int fd, char *saved)
 {
@@ -19,7 +19,7 @@ char	*read_fd(int fd, char *saved)
 	if (!saved)
 	{
 		saved = (char *)malloc(1);
-		saved = "\0";
+		saved[0] = '\0';
 	}
 	b_read = 1;
 	while (!ft_strchr(saved, '\n') && b_read != 0)
@@ -31,6 +31,7 @@ char	*read_fd(int fd, char *saved)
 		if (b_read <= 0)
 		{
 			free (readed);
+			free (saved);
 			return (NULL);
 		}
 		readed[b_read] = '\0';
