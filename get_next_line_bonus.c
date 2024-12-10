@@ -9,7 +9,7 @@
 /*   Updated: 2024/11/13 17:31:44 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*read_fd(int fd, char *saved)
 {
@@ -36,7 +36,6 @@ char	*read_fd(int fd, char *saved)
 		}
 		readed[b_read] = '\0';
 		saved = ft_strjoin(saved, readed);
-		free(readed);
 	}
 	return (saved);
 }

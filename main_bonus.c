@@ -4,6 +4,8 @@
 int main(void)
 {
 	char *s;
+	char *a;
+	char *b;
 
 	int fd = open("test", O_RDONLY);
 	int fd1 = open("test1", O_RDONLY);
@@ -13,11 +15,17 @@ int main(void)
 	{
 		s = get_next_line(fd);
 		printf("%s \n", s);
-		if (s == NULL)
+		a = get_next_line(fd1);
+		printf("%s \n", a);
+		b = get_next_line(fd2);
+		printf("%s \n", b);
+		if (!s && !a && !b)
 			break;
 		free (s);
+		free(a);
+		free(b);
 	}
-	while (1)
+	/*while (1)
 	{
 		s = get_next_line(fd1);
 		printf("%s \n", s);
@@ -33,6 +41,25 @@ int main(void)
 			break;
 		free (s);
 	}
+	*/
+	/*
+	s = get_next_line(fd2);
+	printf("%s \n", s);
+	free(s);
+
+	s = get_next_line(fd1);
+	printf("%s \n", s);
+	free(s);
+	s = get_next_line(fd);
+	printf("%s \n", s);
+	free(s);
+	s = get_next_line(fd2);
+	printf("%s \n", s);
+	free(s);
+	s = get_next_line(fd);
+	printf("%s \n", s);
+	free(s);
+	*/
 	close(fd);
 	close(fd1);
 	close(fd2);

@@ -9,7 +9,7 @@
 /*   Updated: 2024/11/13 17:21:59 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -26,9 +26,10 @@ char	*lost_chars(char	*saved)
 {
 	char	*new_save;
 	int		i;
+	char	*ptr;
 
 	i = 0;
-	char *ptr = saved;
+	ptr = saved;
 	while (*ptr != '\n')
 		ptr++;
 	ptr++;
@@ -52,25 +53,27 @@ char	*lost_chars(char	*saved)
 char	*ft_strjoin(char *saved, char *readed)
 {
 	char	*joined;
-	char *temp;
+	char	*temp;
 	int		i;
 
 	i = 0;
 	temp = saved;
 	joined = (char *)malloc(ft_strlen(saved) + ft_strlen(readed) + 1);
-	while (*saved)
+	while (*temp)
 	{
-		joined[i] = *saved;
+		joined[i] = *temp;
 		i++;
-		saved++;
+		temp++;
 	}
-	while (*readed)
+	temp = readed;
+	while (*temp)
 	{
-		joined[i] = *readed;
+		joined[i] = *temp;
 		i++;
-		readed++;
+		temp++;
 	}
 	free (saved);
+	free (readed);
 	joined[i] = '\0';
 	return (joined);
 }
