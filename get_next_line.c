@@ -17,13 +17,16 @@ char	*read_fd(int fd, char *saved)
 	char	*readed;
 
 	if (!saved)
+	{
 		saved = (char *)malloc(1);
+		saved = "";
+	}
 	b_read = 1;
 	while (!ft_strchr(saved, '\n') && b_read != 0)
 	{
 		readed = (char *)malloc(BUFFER_SIZE + 1);
 		if (!readed)
-			return (NULL);
+			return (free(saved),NULL);
 		b_read = read(fd, readed, BUFFER_SIZE);
 		if (b_read <= 0)
 		{
@@ -33,7 +36,6 @@ char	*read_fd(int fd, char *saved)
 		}
 		readed[b_read] = '\0';
 		saved = ft_strjoin(saved, readed);
-		free(readed);
 	}
 	return (saved);
 }
@@ -43,8 +45,11 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*saved;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || !fd)
+	{
 		return (NULL);
+		free(saved);
+	}
 	if (!saved || !ft_strchr(saved, '\n'))
 		saved = read_fd(fd, saved);
 	if (saved == NULL)

@@ -1,19 +1,19 @@
+#include <stdio.h>
 #include "get_next_line.h"
-#include "stdio.h"
 
 int main(void)
 {
+	int fd;
 	char *s;
 
-	int	fd = open("test", O_RDONLY);
-	
+	fd = open("file", O_RDONLY);
 	while (1)
 	{
 		s = get_next_line(fd);
-		printf("line = %s\n", s);
+		printf("%s", s);
 		if (!s)
 			break;
 		free(s);
 	}
-	return 0;
+	return (0);
 }
