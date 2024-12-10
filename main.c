@@ -12,7 +12,9 @@ int main(void)
 		s = get_next_line(fd);
 		printf("%s", s);
 		if (!s)
+		{
 			break;
+		}
 		free(s);
 	}
 	return (0);
