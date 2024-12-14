@@ -1,21 +1,15 @@
-#include <stdio.h>
 #include "get_next_line.h"
-
-int main(void)
+#include <limits.h>
+int main()
 {
-	int fd;
-	char *s;
-
-	fd = open("file", O_RDONLY);
-	while (1)
+	int fd = open("test", O_RDONLY);
+	char *s = NULL;
+	while ((s = get_next_line(fd)))
 	{
-		s = get_next_line(fd);
 		printf("%s", s);
-		if (!s)
-		{
-			break;
-		}
 		free(s);
 	}
 	return (0);
 }
+
+

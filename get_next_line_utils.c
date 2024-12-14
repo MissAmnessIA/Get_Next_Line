@@ -6,7 +6,7 @@
 /*   By: vmesa-ke <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:33:05 by vmesa-ke          #+#    #+#             */
-/*   Updated: 2024/11/13 17:21:59 by vmesa-ke         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:45:08 by vmesa-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -30,8 +30,10 @@ char	*lost_chars(char	*saved)
 
 	i = 0;
 	temp = saved;
-	while (*temp != '\n')
+	while (*temp && *temp != '\n')
 		temp++;
+	if (!*temp)
+		return (free(saved), NULL);
 	temp++;
 	while (temp[i])
 		i++;
@@ -73,7 +75,7 @@ char	*ft_strjoin(char *saved, char *readed)
 		temp++;
 	}
 	free(saved);
-	free(readed);
+	//free(readed);
 	joined[i] = '\0';
 	return (joined);
 }
