@@ -16,14 +16,14 @@ char	*read_fd(int fd, char *saved)
 	int		b_read;
 	char	*readed;
 
+	readed = (char *)malloc(BUFFER_SIZE + 1);
+		if (!readed)
+			return (free(saved), NULL);
 	b_read = 1;
 	while (!ft_strchr(saved, '\n') && b_read != 0)
 	{
-		readed = (char *)malloc(BUFFER_SIZE + 1);
-		if (!readed)
-			return (NULL);
 		b_read = read(fd, readed, BUFFER_SIZE);
-		if (b_read <= 0)
+		if (b_read < 0)
 		{
 			free (readed);
 			free (saved);
@@ -32,6 +32,7 @@ char	*read_fd(int fd, char *saved)
 		readed[b_read] = '\0';
 		saved = ft_strjoin(saved, readed);
 	}
+	free (readed);
 	return (saved);
 }
 

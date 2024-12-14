@@ -75,7 +75,6 @@ char	*ft_strjoin(char *saved, char *readed)
 		temp++;
 	}
 	free(saved);
-	//free(readed);
 	joined[i] = '\0';
 	return (joined);
 }

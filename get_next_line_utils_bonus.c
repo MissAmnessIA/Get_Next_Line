@@ -30,8 +30,10 @@ char	*lost_chars(char	*saved)
 
 	i = 0;
 	ptr = saved;
-	while (*ptr != '\n')
+	while (*ptr != '\n' && *ptr)
 		ptr++;
+	if (!*ptr)
+		return(free(saved), NULL);
 	ptr++;
 	while (ptr[i])
 		i++;
@@ -73,7 +75,6 @@ char	*ft_strjoin(char *saved, char *readed)
 		temp++;
 	}
 	free (saved);
-	free (readed);
 	joined[i] = '\0';
 	return (joined);
 }

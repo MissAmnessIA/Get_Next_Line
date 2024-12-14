@@ -41,6 +41,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*saved;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (!saved)
 	{
 		saved = (char *)malloc(1);
@@ -48,8 +50,6 @@ char	*get_next_line(int fd)
 			return (NULL);
 		saved[0] = '\0';
 	}
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
 	if (!saved || !ft_strchr(saved, '\n'))
 	{
 		saved = read_fd(fd, saved);
